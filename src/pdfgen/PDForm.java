@@ -5,6 +5,7 @@
  */
 package pdfgen;
 
+import java.util.ArrayList;
 /**
  *
  * @author Sammy Guergachi <sguergachi at gmail.com>
@@ -38,16 +39,16 @@ public class PDForm extends javax.swing.JFrame {
         lbl_tel = new javax.swing.JLabel();
         lbl_tipoenvio = new javax.swing.JLabel();
         lbl_cuenta = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_generar = new javax.swing.JButton();
         dateChooser = new com.toedter.calendar.JDateChooser();
         txt_vendedor = new javax.swing.JTextField();
         txt_nombre = new javax.swing.JTextField();
         txt_cp = new javax.swing.JTextField();
         txt_direccion = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        box_formapago = new javax.swing.JComboBox<>();
+        txt_tipoenvio = new javax.swing.JTextField();
+        txt_telefono = new javax.swing.JTextField();
+        txt_cuenta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -86,14 +87,14 @@ public class PDForm extends javax.swing.JFrame {
         lbl_cuenta.setFont(new java.awt.Font("Arial Narrow", 1, 14)); // NOI18N
         lbl_cuenta.setText("Cuenta:");
 
-        jButton1.setBackground(new java.awt.Color(48, 25, 52));
-        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 51));
-        jButton1.setText("Generar factura");
-        jButton1.setFocusPainted(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_generar.setBackground(new java.awt.Color(48, 25, 52));
+        btn_generar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btn_generar.setForeground(new java.awt.Color(51, 51, 51));
+        btn_generar.setText("Generar factura");
+        btn_generar.setFocusPainted(false);
+        btn_generar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_generarActionPerformed(evt);
             }
         });
 
@@ -105,8 +106,14 @@ public class PDForm extends javax.swing.JFrame {
 
         txt_direccion.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Tarjeta de crédito" }));
+        box_formapago.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        box_formapago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Tarjeta de crédito" }));
+
+        txt_tipoenvio.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        txt_telefono.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+
+        txt_cuenta.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,7 +121,7 @@ public class PDForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btn_generar)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(125, 125, 125)
@@ -127,7 +134,7 @@ public class PDForm extends javax.swing.JFrame {
                                 .addComponent(jLabel1))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(box_formapago, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbl_fecha)
                         .addGap(18, 18, 18)
@@ -148,7 +155,7 @@ public class PDForm extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(lbl_tipoenvio)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(txt_tipoenvio, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lbl_cp)
                                         .addGap(18, 18, 18)
@@ -156,13 +163,13 @@ public class PDForm extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(lbl_tel)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
+                                .addComponent(txt_telefono, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lbl_cuenta)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField3)
+                                        .addComponent(txt_cuenta)
                                         .addGap(13, 13, 13))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lbl_vendedor)
@@ -195,25 +202,37 @@ public class PDForm extends javax.swing.JFrame {
                     .addComponent(lbl_tipoenvio)
                     .addComponent(lbl_tel)
                     .addComponent(txt_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_tipoenvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_formapago)
                     .addComponent(lbl_cuenta)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(box_formapago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_cuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(86, 86, 86)
-                .addComponent(jButton1)
+                .addComponent(btn_generar)
                 .addGap(22, 22, 22))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        ArrayList arrayValores = new ArrayList();
+        arrayValores.add(dateChooser.getDate());
+        arrayValores.add(box_formapago.getSelectedItem());
+        arrayValores.add(txt_cp.getText());
+        arrayValores.add(txt_cuenta.getText());
+        arrayValores.add(txt_direccion.getText());
+        arrayValores.add(txt_nombre.getText());
+        arrayValores.add(txt_telefono.getText());
+        arrayValores.add(txt_tipoenvio.getText());
+        arrayValores.add(txt_vendedor.getText());
+        pdf nuevoPDF = new pdf(arrayValores);
+        nuevoPDF.guardarPDF("Aqui va la ruta para guardar el pdf");
+    }//GEN-LAST:event_btn_generarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -252,13 +271,10 @@ public class PDForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> box_formapago;
+    private javax.swing.JButton btn_generar;
     private com.toedter.calendar.JDateChooser dateChooser;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lbl_cp;
     private javax.swing.JLabel lbl_cuenta;
     private javax.swing.JLabel lbl_direccion;
@@ -269,8 +285,11 @@ public class PDForm extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_tipoenvio;
     private javax.swing.JLabel lbl_vendedor;
     private javax.swing.JTextField txt_cp;
+    private javax.swing.JTextField txt_cuenta;
     private javax.swing.JTextField txt_direccion;
     private javax.swing.JTextField txt_nombre;
+    private javax.swing.JTextField txt_telefono;
+    private javax.swing.JTextField txt_tipoenvio;
     private javax.swing.JTextField txt_vendedor;
     // End of variables declaration//GEN-END:variables
 }
