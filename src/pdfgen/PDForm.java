@@ -272,28 +272,28 @@ public class PDForm extends javax.swing.JFrame {
                 contentStream.newLineAtOffset( 30,700);
 
                 contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-                String line1 = "Nombre: ";
+                String line1 = "Nombre: " + txt_nombre.getText();
                 contentStream.showText(line1);
                 
-                String line2 = "Vendedor: ";
+                String line2 = "Vendedor: "+txt_vendedor.getText();
                 contentStream.showText(line2);
                 
-                String line3 = "Dirección: ";
+                String line3 = "Dirección: "+txt_direccion.getText();
                 contentStream.showText(line3);
                 
-                String line4 = "C.P.: ";
+                String line4 = "C.P.: " + txt_cp.getText();
                 contentStream.showText(line4);
                 
-                String line5 = "Tel: ";
+                String line5 = "Tel: " + txt_telefono.getText();
                 contentStream.showText(line5);
                 
-                String line6 = "Forma de Pago: ";
+                String line6 = "Forma de Pago: " + box_formapago.getSelectedItem();
                 contentStream.showText(line6);
                 
-                String line7 = "Cuenta: ";
+                String line7 = "Cuenta: " + txt_cuenta.getText();
                 contentStream.showText(line7);
                 
-                String line8 = "Tipo de Envío: ";
+                String line8 = "Tipo de Envío: " + txt_tipoenvio.getText();
                 contentStream.showText(line8);
 
                 contentStream.endText();
