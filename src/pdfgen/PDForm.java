@@ -5,17 +5,32 @@
  */
 package pdfgen;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import javafx.scene.control.Cell;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+
 
 
 /**
@@ -114,6 +129,11 @@ public class PDForm extends javax.swing.JFrame {
         txt_vendedor.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
         txt_nombre.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
+        txt_nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_nombreActionPerformed(evt);
+            }
+        });
 
         txt_cp.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
 
@@ -249,63 +269,15 @@ public class PDForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_generarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generarActionPerformed
-
-            ArrayList arrayValores = new ArrayList();
-            arrayValores.add(dateChooser.getDate());
-            arrayValores.add(box_formapago.getSelectedItem());
-            arrayValores.add(txt_cp.getText());
-            arrayValores.add(txt_cuenta.getText());
-            arrayValores.add(txt_direccion.getText());
-            arrayValores.add(txt_nombre.getText());
-            arrayValores.add(txt_telefono.getText());
-            arrayValores.add(txt_tipoenvio.getText());
-            arrayValores.add(txt_vendedor.getText());    
-            try{
-                PDDocument pdf = new PDDocument();
-                PDPage page =new PDPage(PDRectangle.LETTER);
-                
-                pdf.addPage(page);
-                PDPageContentStream contentStream = new PDPageContentStream(pdf, page);
-                contentStream.beginText();
-                contentStream.setFont(PDType1Font.TIMES_BOLD, 16);
-                contentStream.setLeading(14.5f);
-                contentStream.newLineAtOffset( 30,700);
-
-                contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
-                String line1 = "Nombre: " + txt_nombre.getText();
-                contentStream.showText(line1);
-                
-                String line2 = "Vendedor: "+txt_vendedor.getText();
-                contentStream.showText(line2);
-                
-                String line3 = "Dirección: "+txt_direccion.getText();
-                contentStream.showText(line3);
-                
-                String line4 = "C.P.: " + txt_cp.getText();
-                contentStream.showText(line4);
-                
-                String line5 = "Tel: " + txt_telefono.getText();
-                contentStream.showText(line5);
-                
-                String line6 = "Forma de Pago: " + box_formapago.getSelectedItem();
-                contentStream.showText(line6);
-                
-                String line7 = "Cuenta: " + txt_cuenta.getText();
-                contentStream.showText(line7);
-                
-                String line8 = "Tipo de Envío: " + txt_tipoenvio.getText();
-                contentStream.showText(line8);
-
-                contentStream.endText();
-                contentStream.close();
-         
-                pdf.save("ticket.pdf");
-            }catch(Exception x){
-                System.out.println("Error: "+x.getMessage().toString());
-            }
-        
+        writePDF();
     }//GEN-LAST:event_btn_generarActionPerformed
-  
+
+    private void txt_nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nombreActionPerformed
+
+    }//GEN-LAST:event_txt_nombreActionPerformed
+    
+
+
         /**
      * @param args the command line arguments
      */
@@ -341,6 +313,8 @@ public class PDForm extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> box_formapago;
@@ -366,4 +340,64 @@ public class PDForm extends javax.swing.JFrame {
     private javax.swing.JTextField txt_tipoenvio;
     private javax.swing.JTextField txt_vendedor;
     // End of variables declaration//GEN-END:variables
+
+    private static void writePDF() {
+ 
+        Document document = new Document();
+ 
+        try {
+        	String path = new File(".").getCanonicalPath();
+        	String FILE_NAME = path + "/ticket.pdf";
+        	
+            PdfWriter.getInstance(document, new FileOutputStream(new File(FILE_NAME)));
+ 
+            document.open();
+ 
+            Paragraph paragraphHello = new Paragraph();
+            paragraphHello.add("REBERZZA");
+            paragraphHello.setAlignment(Element.ALIGN_JUSTIFIED);
+            
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+ 
+            Phrase line1 = new Phrase();
+            
+            line1.add("Nombre: "  );
+            
+            document.add(Chunk.NEWLINE);
+ 
+            document.add(line1);
+            
+            // Creating a table         
+            PdfPTable table = new PdfPTable(5);    
+
+            table.setWidthPercentage(100);
+            table.setSpacingBefore(0f);
+            table.setSpacingAfter(0f);
+
+            // first row
+            table.addCell("Cantidad");
+            PdfPCell des = new PdfPCell(new Phrase("Descripción"));
+            des.setColspan(2);
+            table.addCell(des);
+            table.addCell("Precio");
+            table.addCell("Importe");
+            
+
+            for (int i = 0; i < 100; i++) {
+                table.addCell("aime" + i);
+                table.addCell(des);
+                table.addCell("destination" + i);
+                table.addCell("extension" + i);
+            }
+            document.add(table);               
+         
+            document.close();
+        } catch (FileNotFoundException | DocumentException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
 }
